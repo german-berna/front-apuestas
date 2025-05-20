@@ -4,7 +4,7 @@ export default function LaligaPredictions() {
   const [matches, setMatches] = useState([]);
 
   useEffect(() => {
-    fetch("https://laliga-api.onrender.com/predicciones")
+    fetch("https://apuestas-jify.onrender.com/predicciones")
       .then(res => res.json())
       .then(data => setMatches(data))
       .catch(err => console.error("Error cargando predicciones:", err));

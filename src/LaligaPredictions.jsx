@@ -32,7 +32,7 @@ export default function LaligaPredictions() {
           matches.map((match, idx) => {
             const { homeWin, awayWin, draw } = match.probabilities;
             const empateProbable = draw >= 25;
-            const confiable = match.confidence >= 45;
+            const confiable = match.confidence >= 25;
 
             return (
               <div key={idx} className="border-4 border-blue-300 rounded-3xl shadow-2xl p-12 bg-white">
@@ -69,7 +69,7 @@ export default function LaligaPredictions() {
                 </div>
 
                 <p className="text-2xl text-gray-600 mt-8 text-center">
-                  Confianza estimada: <strong>{match.confidence.toFixed(1)}%</strong> — {confiable ? (
+                  Ventaja estimada: <strong>{match.confidence.toFixed(1)}%</strong> — {confiable ? (
                     <span className="text-green-600 font-bold">Entrada confiable</span>
                   ) : (
                     <span className="text-yellow-600 font-bold">Entrada dudosa</span>

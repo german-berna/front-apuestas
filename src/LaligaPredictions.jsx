@@ -30,13 +30,9 @@ export default function LaligaPredictions() {
           <p className="text-center text-gray-500 text-3xl">Cargando predicciones...</p>
         ) : (
           matches.map((match, idx) => {
-            const totalScore = match.scoreHome + match.scoreAway;
-            const homePercent = (match.scoreHome / totalScore) * 100;
-            const awayPercent = (match.scoreAway / totalScore) * 100;
-            const drawPercent = 100 - homePercent - awayPercent;
-
-            const confiable = match.confidence >= 25;
-            const empateProbable = match.drawProbability >= 80;
+            const { homeWin, awayWin, draw } = match.probabilities;
+            const empateProbable = draw >= 25;
+            const confiable = match.confidence >= 45;
 
             return (
               <div key={idx} className="border-4 border-blue-300 rounded-3xl shadow-2xl p-12 bg-white">
@@ -56,22 +52,19 @@ export default function LaligaPredictions() {
                   🏆 Predicción: <span className="font-extrabold">{match.prediction}</span>
                 </p>
 
-                <div className="mt-8 space-y-4">
-                  <div className="flex justify-between text-2xl font-semibold">
-                    <span className="text-blue-800">{match.home} ({homePercent.toFixed(1)}%)</span>
-                    <span> /// </span>
-                    <span className="text-red-800">{match.away} ({awayPercent.toFixed(1)}%)</span>
-                  </div>
-                  <div className="text-center text-2xl text-orange-600 mt-4 font-semibold">
-                    🟠 Probabilidad de empate: <strong>{match.drawProbability?.toFixed(1)}%</strong>
-                    {empateProbable && (
-                      <div className="text-3xl text-orange-800 font-bold mt-2">⚠️ Empate muy probable</div>
-                    )}
-                  </div>
+                <div className="mt-8 space-y-6 text-center">
+                  <p className="text-2xl font-semibold text-blue-700">{match.home}: {homeWin.toFixed(1)}%</p>
+                  <p className="text-2xl font-semibold text-orange-500">Empate: {draw.toFixed(1)}%</p>
+                  <p className="text-2xl font-semibold text-red-700">{match.away}: {awayWin.toFixed(1)}%</p>
+
+                  {empateProbable && (
+                    <p className="text-3xl text-orange-800 font-bold mt-2">⚠️ Empate muy probable</p>
+                  )}
+
                   <div className="w-full h-8 bg-gray-300 rounded-full flex overflow-hidden">
-                    <div className="bg-blue-600 h-full" style={{ width: `${homePercent}%` }}></div>
-                    <div className="bg-orange-400 h-full" style={{ width: `${drawPercent}%` }}></div>
-                    <div className="bg-red-600 h-full" style={{ width: `${awayPercent}%` }}></div>
+                    <div className="bg-blue-600 h-full" style={{ width: `${homeWin}%` }}></div>
+                    <div className="bg-orange-400 h-full" style={{ width: `${draw}%` }}></div>
+                    <div className="bg-red-600 h-full" style={{ width: `${awayWin}%` }}></div>
                   </div>
                 </div>
 

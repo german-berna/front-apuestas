@@ -32,7 +32,7 @@ export default function LaligaPredictions() {
           matches.map((match, idx) => {
             const { homeWin, awayWin, draw } = match.probabilities;
             const empateProbable = draw >= 25;
-            const confiable = match.confidence >= 25;
+            const confiable = match.confidence >= 15;
 
             return (
               <div key={idx} className="border-4 border-blue-300 rounded-3xl shadow-2xl p-12 bg-white">
